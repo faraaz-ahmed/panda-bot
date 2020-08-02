@@ -18,4 +18,4 @@ client.on('message', (message) => {
   }
 });
 
-client.login(pandaBotToken);
+client.login(process.env.token);
