@@ -16,4 +16,9 @@ client.on('message', (message) => {
   badWordDetector.actOnBadMessage(message);
 });
 
+client.on('messageUpdate', (oldMessage, newMessage) => {
+  const badWordDetector = new BadWordDetector();
+  badWordDetector.actOnBadMessage(newMessage);
+});
+
 client.login(process.env.token);
