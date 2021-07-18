@@ -3,7 +3,7 @@ module.exports = class Picture {
 
   sendAvatar(message) {
     // Send the user's avatar URL
-    message.reply("nigger here's your avatar");
+    message.reply("Here's your avatar");
     message.reply(message.author.displayAvatarURL());
   }
 };
