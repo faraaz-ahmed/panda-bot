@@ -1,10 +1,11 @@
 const BadWordConstants = require('./BadWordConstants');
+const messageAction = require('../MessageAction/MessageAction');
 
 const ResponseMessages = {
   badWord:
     'Usage of bad words is prohibited, please refrain from using such terms.',
   nonAlphaNumeric: 'Please use english alphabets.',
-  exceededMentionLimit: 'Please don\'t spam or ping multiple people at once.'
+  exceededMentionLimit: 'Please don\'t spam or ping multiple times at once.'
 };
 
 module.exports = class BadWordDetector {
@@ -68,7 +69,7 @@ module.exports = class BadWordDetector {
     return count > limit;
   }
 
-  timeout(minutes, muteUser, mutedRole) {
+  unmuteAfterTimeout(minutes, muteUser, mutedRole) {
     setTimeout(() => {
       muteUser.roles.remove(mutedRole, `Temporary mute expired.`);
     }, minutes * 60000); // time in ms
@@ -76,34 +77,13 @@ module.exports = class BadWordDetector {
 
   actOnBadMessage(message) {
     if (this.detect(message.content)) {
-      message.fetch(message.id).then((msg) => msg.delete());
-      message
-        .reply(ResponseMessages.badWord)
-        .then((msg) => {
-          msg.delete({ timeout: 6000 /*time unitl delete in milliseconds*/ });
-        })
-        .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
+      messageAction.delete(message);
+      messageAction.replyThenDelete(message, ResponseMessages.badWord, 6);
     } else if (!this.checkIfAlphanumeric(message.content)) {
-      message.fetch(message.id).then((msg) => msg.delete());
-      message
-        .reply(ResponseMessages.nonAlphaNumeric)
-        .then((msg) => {
-          msg.delete({ timeout: 6000 /*time unitl delete in milliseconds*/ });
-        })
-        .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
+      messageAction.delete(message);
+      messageAction.replyThenDelete(message, ResponseMessages.nonAlphaNumeric, 6);
     } else if (this.ifExceedsMentionLimit(message.content, 4)) {
-      message.fetch(message.id).then((msg) => msg.delete());
-      const muteRole = message.guild.roles.find(r => r.name === 'muted');
-      const muteUser = message.author;
-      muteUser.roles.add(muteRole);
-      message
-        .reply(ResponseMessages.exceededMentionLimit)
-        .then((msg) => {
-          msg.delete({ timeout: 6000 /*time unitl delete in milliseconds*/ });
-        })
-        .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
-      console.log(message.content)
-      this.timeout(minutes, muteUser, muteRole);
+      messageAction.mute(message);
     }
   }
 };
