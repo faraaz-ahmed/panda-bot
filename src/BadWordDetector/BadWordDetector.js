@@ -4,10 +4,11 @@ const ResponseMessages = {
   badWord:
     'Usage of bad words is prohibited, please refrain from using such terms.',
   nonAlphaNumeric: 'Please use english alphabets.',
+  exceededMentionLimit: 'Please don\'t spam or ping multiple people at once.'
 };
 
 module.exports = class BadWordDetector {
-  constructor() {}
+  constructor() { }
 
   resolve(word) {
     let resolvedWord = '';
@@ -17,8 +18,8 @@ module.exports = class BadWordDetector {
       resolvedWord += BadWordConstants.characterReplicas[currentChar]
         ? BadWordConstants.characterReplicas[currentChar]
         : currentChar !== ' '
-        ? currentChar
-        : '';
+          ? currentChar
+          : '';
       i++;
     }
     return resolvedWord;
@@ -47,12 +48,30 @@ module.exports = class BadWordDetector {
 
     for (i = 0, len = str.length; i < len; i++) {
       code = str.charCodeAt(i);
-      if (!(code > 31 && code < 128)) {
+      if (code > 128) {
         // lower alpha (a-z)
         return false;
       }
     }
     return true;
+  }
+
+  ifExceedsMentionLimit(str, limit) {
+    var code, i, len;
+    let count = 0;
+    for (i = 0, len = str.length; i < len; i++) {
+      code = str.charCodeAt(i);
+      if (code === 64) {
+        count += 1
+      }
+    }
+    return count > limit;
+  }
+
+  timeout(minutes, muteUser, mutedRole) {
+    setTimeout(() => {
+      muteUser.roles.remove(mutedRole, `Temporary mute expired.`);
+    }, minutes * 60000); // time in ms
   }
 
   actOnBadMessage(message) {
@@ -72,6 +91,19 @@ module.exports = class BadWordDetector {
           msg.delete({ timeout: 6000 /*time unitl delete in milliseconds*/ });
         })
         .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
+    } else if (this.ifExceedsMentionLimit(message.content, 4)) {
+      message.fetch(message.id).then((msg) => msg.delete());
+      const muteRole = message.guild.roles.find(r => r.name === 'muted');
+      const muteUser = message.author;
+      muteUser.roles.add(muteRole);
+      message
+        .reply(ResponseMessages.exceededMentionLimit)
+        .then((msg) => {
+          msg.delete({ timeout: 6000 /*time unitl delete in milliseconds*/ });
+        })
+        .catch(/*Your Error handling if the Message isn't returned, sent, etc.*/);
+      console.log(message.content)
+      this.timeout(minutes, muteUser, muteRole);
     }
   }
 };
