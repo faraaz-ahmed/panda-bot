@@ -15,6 +15,14 @@ class MessageQueue {
     this.setCombinedMessage();
   }
 
+  pop(times = 1) {
+    if (this.queue.length > 0) {
+      for(let i = 0; i <= this.queue.length; i++) {
+        this.queue.pop();
+      }
+    }
+  }
+
   setCombinedMessage() {
     let message = '';
     this.queue.forEach(messageInQueue => {

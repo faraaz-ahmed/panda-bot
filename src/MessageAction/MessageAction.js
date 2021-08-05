@@ -11,11 +11,12 @@ class MessageAction {
     message?.fetch(message.id).then((msg) => msg.delete());
   }
 
-  replyThenDelete(message, response, timeoutTillDelete) {
+  replyThenDelete(message, response, timeoutTillDelete, messageQueue) {
     message
       .reply(response)
       .then((msg) => {
         msg.delete({ timeout: timeoutTillDelete * 1000 /*time unitl delete in milliseconds*/ });
+        messageQueue.pop(2);
       })
       .catch((msg) => {
         console.log(`There was an error with the following message "${message.content}"`)
