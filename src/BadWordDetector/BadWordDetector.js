@@ -1,5 +1,6 @@
 const BadWordConstants = require('./BadWordConstants');
 const messageAction = require('../MessageAction/MessageAction');
+const messageQueue = require('../MessageQueue/MessageQueue');
 
 const ResponseMessages = {
   badWord:
@@ -76,13 +77,14 @@ module.exports = class BadWordDetector {
   }
 
   actOnBadMessage(message) {
-    if (this.detect(message.content)) {
+    messageQueue.add(message.content);
+    if (this.detect(messageQueue.combinedMessage)) {
       messageAction.delete(message);
       messageAction.replyThenDelete(message, ResponseMessages.badWord, 6);
-    } else if (!this.checkIfAlphanumeric(message.content)) {
+    } else if (!this.checkIfAlphanumeric(messageQueue.combinedMessage)) {
       messageAction.delete(message);
       messageAction.replyThenDelete(message, ResponseMessages.nonAlphaNumeric, 6);
-    } else if (this.ifExceedsMentionLimit(message.content, 4)) {
+    } else if (this.ifExceedsMentionLimit(messageQueue.combinedMessage, 4)) {
       messageAction.mute(message);
     }
   }
