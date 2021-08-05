@@ -1,4 +1,5 @@
 {
   "logslink": "https://dashboard.heroku.com/apps/pandabotxyz/logs",
-  "bot_dasboard_link": "https://discord.com/developers/applications/731881900943212664/bot"
+  "bot_dasboard_link": "https://discord.com/developers/applications/731881900943212664/bot",
+  "invite_link": "https://discord.com/api/oauth2/authorize?client_id=731881900943212664&permissions=8&scope=bot"
 }
