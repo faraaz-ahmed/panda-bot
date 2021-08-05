@@ -88,6 +88,7 @@ module.exports = class BadWordDetector {
       messageAction.delete(message);
       messageAction.replyThenDelete(message, ResponseMessages.nonAlphaNumeric, 6, messageQueue);
     }
+    console.log('message queue', messageQueue.queue)
     //  else if (this.ifExceedsMentionLimit(messageQueue.combinedMessage, 4)) {
     //   messageAction.mute(message);
     // }

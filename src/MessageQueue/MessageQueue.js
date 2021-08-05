@@ -6,18 +6,20 @@ class MessageQueue {
   }
 
   add(message) {
-    if (this.queue.length < 4) {
-      this.queue.push(message);
-    } else {
+    if (this.queue.length > 4) {
       this.queue.shift();
-      this.queue.push(message);
     }
+    this.queue.push(this.removeSpecialCharacters(message));
     this.setCombinedMessage();
+  }
+
+  removeSpecialCharacters(message) {
+    return message.replace(/[^a-zA-Z0-9]/g, '');
   }
 
   pop(times = 1) {
     if (this.queue.length > 0) {
-      for(let i = 0; i <= this.queue.length; i++) {
+      for(let i = 0; i < times; i++) {
         this.queue.pop();
       }
     }
@@ -30,7 +32,6 @@ class MessageQueue {
     });
     this.combinedMessage = message;
   }
-
   
 }
 

@@ -1,5 +1,6 @@
 const badWords = [
   'negro',
+  'nihg',
   'niger',
   'nigga',
   'niga',
@@ -16,6 +17,7 @@ const badWords = [
   'retrd',
   'retord',
   'feg',
+  'fahg'
 ];
 
 const characterReplicas = {
