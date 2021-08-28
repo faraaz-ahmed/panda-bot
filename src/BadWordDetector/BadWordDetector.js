@@ -5,9 +5,9 @@ const ROLES = require('../AppConstants/roles');
 
 const ResponseMessages = {
   badWord:
-    'Usage of bad words is prohibited, please refrain from using such terms.',
-  nonAlphaNumeric: 'Please use english alphabets.',
-  exceededMentionLimit: 'Please don\'t spam or ping multiple times at once.'
+    'Usage of bad words is prohibited, please refrain from using such terms. :panfat:',
+  nonAlphaNumeric: 'Please use english alphabets. :panfat:',
+  exceededMentionLimit: 'Please don\'t spam or ping multiple times at once. :panfat:'
 };
 
 module.exports = class BadWordDetector {

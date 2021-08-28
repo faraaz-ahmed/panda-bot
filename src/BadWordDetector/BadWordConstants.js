@@ -1,15 +1,15 @@
 const badWords = [
-  'negro',
+  'negr',
   'nihg',
-  'niger',
-  'nigga',
-  'niga',
+  // 'niger',
+  // 'nigga',
+  // 'niga',
   'nig',
-  'nigs',
-  'faglex',
-  'fagot',
+  // 'nigs',
+  // 'faglex',
+  // 'fagot',
   'fag',
-  'пig',
+  // 'пig',
   'nger',
   'higer',
   'gay',
@@ -17,13 +17,23 @@ const badWords = [
   'retrd',
   'retord',
   'feg',
-  'fahg'
+  'fahg',
+  'fgot',
+  'fgat',
+  'ngr'
 ];
+
+const allowedWords = [
+  'night',
+  'onger',
+  'anger',
+]
 
 const characterReplicas = {
   // A
   a: 'a',
   A: 'a',
+  '@': 'a',
   // D
   d: 'd',
   D: 'd',
@@ -39,6 +49,7 @@ const characterReplicas = {
   '&': 'g',
   9: 'g',
   q: 'g',
+  ɠ: 'g',
   // H
   h: 'h',
   H: 'h',
@@ -58,9 +69,12 @@ const characterReplicas = {
   '*': 'i',
   l: 'i',
   $: 'i',
+  ı: 'i',
   // N
   n: 'n',
   N: 'n',
+  и: 'n',
+  п: 'n',
   // O
   o: 'o',
   O: 'o',
@@ -68,6 +82,7 @@ const characterReplicas = {
   // R
   r: 'r',
   R: 'r',
+  // T
   t: 't',
   T: 't',
 };
@@ -75,4 +90,5 @@ const characterReplicas = {
 module.exports = {
   badWords,
   characterReplicas,
+  allowedWords
 };
