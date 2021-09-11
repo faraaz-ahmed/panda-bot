@@ -27,6 +27,7 @@ const allowedWords = [
   'night',
   'onger',
   'anger',
+  '😔'
 ]
 
 const characterReplicas = {
