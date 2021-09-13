@@ -1,4 +1,5 @@
 const badWords = [
+  'httpsdiscord',
   'negr',
   'nihg',
   // 'niger',
@@ -25,9 +26,12 @@ const badWords = [
 
 const allowedWords = [
   'night',
-  'onger',
-  'anger',
-  '😔'
+  'ong',
+  'ang',
+  '😔',
+  'ing',
+  'ung',
+  'eng'
 ]
 
 const characterReplicas = {
@@ -71,6 +75,7 @@ const characterReplicas = {
   l: 'i',
   $: 'i',
   ı: 'i',
+  y: 'i',
   // N
   n: 'n',
   N: 'n',

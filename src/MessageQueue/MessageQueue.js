@@ -1,16 +1,16 @@
-const BadWordConstants = require("./../BadWordDetector/BadWordConstants");
+const BadWordConstants = require('./../BadWordDetector/BadWordConstants');
 
 class MessageQueue {
 	constructor() {
 		this.queue = [];
 		this.size = 4;
-		this.combinedMessage = "";
+		this.combinedMessage = '';
 	}
 
 	filterOutAllowedWords(messageString) {
 		let filteredMessage = messageString;
 		BadWordConstants.allowedWords.forEach((allowedWord) => {
-			filteredMessage = filteredMessage.replace(allowedWord, "");
+			filteredMessage = filteredMessage.replace(allowedWord, '');
 		});
 		return filteredMessage;
 	}
@@ -21,15 +21,11 @@ class MessageQueue {
 		}
 		this.queue.push(
 			this.filterOutAllowedWords(
-				// TODO: decide if to push or not to quque if there are allowed words?
+				// TODO: decide if to push or not to queue if there are allowed words?
 				message.toLowerCase()
 			)
 		);
 		this.setCombinedMessage();
-	}
-
-	removeSpecialCharacters(message) {
-		return message.replace(/[^a-zA-Z0-9]/g, "");
 	}
 
 	pop(times = 1) {
@@ -41,7 +37,7 @@ class MessageQueue {
 	}
 
 	setCombinedMessage() {
-		let message = "";
+		let message = '';
 		this.queue.forEach((messageInQueue) => {
 			message += messageInQueue;
 		});
@@ -49,5 +45,6 @@ class MessageQueue {
 	}
 }
 
-const messageAction = new MessageQueue();
-module.exports = messageAction;
+const messageQueue = new MessageQueue();
+module.exports = messageQueue;
+module.exports = MessageQueue;
