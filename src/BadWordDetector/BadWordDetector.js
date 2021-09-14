@@ -6,7 +6,7 @@ const ResponseMessages = {
 		'Usage of bad words is prohibited, please refrain from using such terms.',
 	nonAlphaNumeric: 'Please use english alphabets. ',
 	exceededMentionLimit: "Please don't spam or ping multiple times at once.",
-	link: 'Invite links are not supported'
+	link: 'Invite links are not supported',
 };
 
 module.exports = class BadWordDetector {
@@ -84,7 +84,6 @@ module.exports = class BadWordDetector {
 	}
 
 	deleteMessageAndReply(message, response, timeout, messageQueue) {
-		messageAction.delete(message, messageQueue);
 		return {
 			message,
 			response,
@@ -97,7 +96,7 @@ module.exports = class BadWordDetector {
 		if (message.author.bot) return;
 		let responseMessage = '';
 
-		[this.messageQueue, this.filteredMessageQueue].forEach((messageQueue) => {
+		[this.messageQueue].forEach((messageQueue) => {
 			messageQueue.add(message.content);
 			if (this.detect(messageQueue.combinedMessage)) {
 				responseMessage = this.deleteMessageAndReply(
@@ -124,7 +123,7 @@ module.exports = class BadWordDetector {
 		});
 
 		if (responseMessage) {
-			console.log('inside')
+			messageAction.delete(message);
 			messageAction.replyThenDelete(
 				responseMessage?.message,
 				responseMessage?.response,
@@ -133,7 +132,11 @@ module.exports = class BadWordDetector {
 			);
 		}
 
-		console.log('message queue', this.messageQueue.queue, this.filteredMessageQueue.queue);
+		console.log(
+			'message queue',
+			this.messageQueue.queue,
+			this.filteredMessageQueue.queue
+		);
 		return Boolean(responseMessage);
 	}
 };

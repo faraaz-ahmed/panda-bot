@@ -7,8 +7,8 @@ class MessageAction {
 		}, minutes * 60000); // time in ms
 	}
 
-	delete(message, messageQueue = '') {
-		message?.fetch(message.id).then((msg) => msg.delete());
+	delete(message) {
+		message?.fetch(message.id).then((msg) => msg.delete().catch(() => console.log('unable to delete')));
 	}
 
 	replyThenDelete(message, response, timeoutTillDelete, messageQueue) {

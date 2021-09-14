@@ -18,11 +18,11 @@ client.on('ready', () => {
 });
 
 client.on('message', (message) => {
-  badWordDetector.actOnBadMessage(message);
+  // badWordDetector.actOnBadMessage(message);
 });
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
-  badWordDetector.actOnBadMessage(newMessage);
+  // badWordDetector.actOnBadMessage(newMessage);
 });
 
 client.login(process.env.token);
