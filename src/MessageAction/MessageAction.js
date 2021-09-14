@@ -7,7 +7,7 @@ class MessageAction {
 		}, minutes * 60000); // time in ms
 	}
 
-	delete(message) {
+	delete(message, messageQueue='') {
 		message?.fetch(message.id).then((msg) => msg.delete());
 	}
 
