@@ -29,13 +29,14 @@ class MessageQueue {
 		this.setCombinedMessage();
 	}
 
-	// pop(times = 1) {
-	// 	if (this.queue.length > 0) {
-	// 		for (let i = 0; i < times; i++) {
-	// 			this.queue.pop();
-	// 		}
-	// 	}
-	// }
+	pop(times = 1) {
+		if (this.queue.length > 0) {
+			for (let i = 0; i < times; i++) {
+				this.queue.pop();
+			}
+		}
+		this.setCombinedMessage();
+	}
 
 	setCombinedMessage() {
 		let message = '';
@@ -46,6 +47,4 @@ class MessageQueue {
 	}
 }
 
-// const messageQueue = new MessageQueue();
-// module.exports = messageQueue;
 module.exports = MessageQueue;
