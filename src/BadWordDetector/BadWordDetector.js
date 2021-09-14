@@ -97,7 +97,7 @@ module.exports = class BadWordDetector {
 		if (message.author.bot) return;
 		let responseMessage = '';
 
-		[this.messageQueue].forEach((messageQueue) => {
+		[this.messageQueue, this.filteredMessageQueue].forEach((messageQueue) => {
 			messageQueue.add(message.content);
 			if (this.detect(messageQueue.combinedMessage)) {
 				responseMessage = this.deleteMessageAndReply(

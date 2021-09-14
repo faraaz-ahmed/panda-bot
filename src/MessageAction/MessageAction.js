@@ -7,7 +7,7 @@ class MessageAction {
 		}, minutes * 60000); // time in ms
 	}
 
-	delete(message, messageQueue='') {
+	delete(message, messageQueue = '') {
 		message?.fetch(message.id).then((msg) => msg.delete());
 	}
 
@@ -15,10 +15,13 @@ class MessageAction {
 		message
 			.reply(response)
 			.then((msg) => {
-				msg.delete({
-					timeout:
-						timeoutTillDelete * 1000 /*time unitl delete in milliseconds*/,
-				});
+				msg
+					.delete({
+						timeout:
+							timeoutTillDelete * 1000 /*time unitl delete in milliseconds*/,
+					})
+					.then(() => console.log('deletion successful'))
+					.catch(() => console.log('error in deletion'));
 				messageQueue.pop();
 			})
 			.catch(
