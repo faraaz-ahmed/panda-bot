@@ -12,7 +12,10 @@ const ResponseMessages = {
 };
 
 module.exports = class BadWordDetector {
-	constructor() {}
+	constructor(messageQueue, filteredMessageQueue) {
+		this.messageQueue = messageQueue;
+		this.filteredMessageQueue = filteredMessageQueue;
+	}
 
 	resolve(word) {
 		let resolvedWord = '';
@@ -98,7 +101,7 @@ module.exports = class BadWordDetector {
 		console.log('msgq', messageQueue, filteredMessageQueue)
 
 		if (message.author.bot) return;
-		[messageQueue, filteredMessageQueue].forEach((messageQueue) => {
+		[this.messageQueue, this.filteredMessageQueue].forEach((messageQueue) => {
 			messageQueue.add(message.content);
 			if (this.detect(messageQueue.combinedMessage)) {
 				responseMessage = this.deleteMessageAndReply(
@@ -135,7 +138,7 @@ module.exports = class BadWordDetector {
 			);
 		}
 
-		console.log('message queue', messageQueue.queue, filteredMessageQueue.queue);
+		console.log('message queue', this.messageQueue.queue, this.filteredMessageQueue.queue);
 		return Boolean(responseMessage);
 		//  else if (this.ifExceedsMentionLimit(messageQueue.combinedMessage, 4)) {
 		//   messageAction.mute(message);

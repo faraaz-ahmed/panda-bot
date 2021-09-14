@@ -46,6 +46,6 @@ class MessageQueue {
 	}
 }
 
-const messageQueue = new MessageQueue();
-module.exports = messageQueue;
-// module.exports = MessageQueue;
+// const messageQueue = new MessageQueue();
+// module.exports = messageQueue;
+module.exports = MessageQueue;

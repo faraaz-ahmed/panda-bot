@@ -24,6 +24,6 @@ class FilteredMessageQueue extends MessageQueue {
 	}
 }
 
-const filteredMessageQueue = new FilteredMessageQueue();
-module.exports = filteredMessageQueue;
-// module.exports = FilteredMessageQueue;
+// const filteredMessageQueue = new FilteredMessageQueue();
+// module.exports = filteredMessageQueue;
+module.exports = FilteredMessageQueue;
