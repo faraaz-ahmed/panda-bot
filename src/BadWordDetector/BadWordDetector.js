@@ -1,7 +1,7 @@
 const BadWordConstants = require('./BadWordConstants');
 const messageAction = require('../MessageAction/MessageAction');
-const MessageQueue = require('../MessageQueue/MessageQueue');
-const FilteredMessageQueue = require('../MessageQueue/FilteredMessageQueue');
+const messageQueue = require('../MessageQueue/MessageQueue');
+const filteredMessageQueue = require('../MessageQueue/FilteredMessageQueue');
 
 const ResponseMessages = {
 	badWord:
@@ -94,9 +94,8 @@ module.exports = class BadWordDetector {
 
 	actOnBadMessage(message) {
 		// if(message.member.roles.has(ROLES.BOT_ROLE)) return;
-		const messageQueue = new MessageQueue();
-		const filteredMessageQueue = new FilteredMessageQueue();
 		let responseMessage = '';
+		console.log('msgq', messageQueue, filteredMessageQueue)
 
 		if (message.author.bot) return;
 		[messageQueue, filteredMessageQueue].forEach((messageQueue) => {
@@ -124,8 +123,10 @@ module.exports = class BadWordDetector {
 				);
 			}
 		});
+		console.log('response message', responseMessage)
 
 		if (responseMessage) {
+			console.log('inside')
 			messageAction.replyThenDelete(
 				responseMessage?.message,
 				responseMessage?.response,
@@ -134,7 +135,8 @@ module.exports = class BadWordDetector {
 			);
 		}
 
-		console.log('message queue', messageQueue.queue);
+		console.log('message queue', messageQueue.queue, filteredMessageQueue.queue);
+		return Boolean(responseMessage);
 		//  else if (this.ifExceedsMentionLimit(messageQueue.combinedMessage, 4)) {
 		//   messageAction.mute(message);
 		// }

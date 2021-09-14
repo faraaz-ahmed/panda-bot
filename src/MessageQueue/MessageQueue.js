@@ -16,7 +16,8 @@ class MessageQueue {
 	}
 
 	add(message) {
-		if (this.queue.length > 4) {
+		console.log('check queue', this.queue)
+		if (this.queue.length > this.size) {
 			this.queue.shift();
 		}
 		this.queue.push(
@@ -28,13 +29,13 @@ class MessageQueue {
 		this.setCombinedMessage();
 	}
 
-	pop(times = 1) {
-		if (this.queue.length > 0) {
-			for (let i = 0; i < times; i++) {
-				this.queue.pop();
-			}
-		}
-	}
+	// pop(times = 1) {
+	// 	if (this.queue.length > 0) {
+	// 		for (let i = 0; i < times; i++) {
+	// 			this.queue.pop();
+	// 		}
+	// 	}
+	// }
 
 	setCombinedMessage() {
 		let message = '';
@@ -47,4 +48,4 @@ class MessageQueue {
 
 const messageQueue = new MessageQueue();
 module.exports = messageQueue;
-module.exports = MessageQueue;
+// module.exports = MessageQueue;
